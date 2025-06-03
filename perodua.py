@@ -79,7 +79,7 @@ st.markdown(
 )
 
 # Guna fungsi tu dengan nama fail gambar kamu
-set_background_scaled("covid.jpg", size="50%")
+set_background_scaled("covid.jpg", size="80%")
 
 
 st.title("Papan Pemuka Global COVID-19")
