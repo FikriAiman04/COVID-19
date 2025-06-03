@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
-import streamlit as st
+import matplotlib.pyplot as plt
 import base64
+
 
 def set_background_scaled(jpg_file, size="80%"):
     with open(jpg_file, "rb") as image_file:
