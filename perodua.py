@@ -28,12 +28,14 @@ df_country['date'] = pd.to_datetime(df_country['date'])
 
 st.subheader(f"Statistik COVID-19 di {country}")
 
-latest = df_country.iloc[-1]
-
-st.write(f"**Tanggal:** {latest['date'].date()}")
-st.write(f"Total kasus: {int(latest['total_cases'] or 0):,}")
-st.write(f"Total kematian: {int(latest['total_deaths'] or 0):,}")
 
 fig, ax = plt.subplots()
 ax.plot(df_country['date'], df_country['new_cases'].fillna(0), label="Kasus Baru")
 
+df_country['total_cases'] = df_country['total_cases'].fillna(0)
+df_country['total_deaths'] = df_country['total_deaths'].fillna(0)
+
+latest = df_country.iloc[-1]
+
+st.write(f"Total kasus: {int(latest['total_cases']):,}")
+st.write(f"Total kematian: {int(latest['total_deaths']):,}")
