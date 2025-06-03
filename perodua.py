@@ -21,6 +21,16 @@ def set_background(jpg_file):
         """,
         unsafe_allow_html=True
     )
+st.markdown(
+    """
+    <style>
+    .stApp {
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Guna fungsi tu dengan nama fail gambar kamu
 set_background("covid.jpg")
