@@ -21,6 +21,41 @@ def set_background(jpg_file):
         """,
         unsafe_allow_html=True
     )
+    st.markdown(
+    """
+    <style>
+    /* Tukar teks ke warna putih */
+    .stApp {
+        color: white;
+    }
+
+    /* Jadikan semua container utama & sidebar transparent */
+    .block-container {
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+
+    .css-18e3th9, .css-1d391kg {
+        background-color: rgba(0, 0, 0, 0) !important;
+        backdrop-filter: none !important;
+    }
+
+    header, footer {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    /* Buang kabur (blur) yang mungkin dipaksa oleh Streamlit default */
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: none !important;
+        z-index: -1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <style>
