@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Papan Pemuka COVID-19", page_icon="🦠")
 
+# Tukar background jadi biru
 st.markdown(
     """
     <style>
@@ -38,6 +39,7 @@ negara = st.selectbox("Pilih negara", negara_list, index=default_idx)
 df_negara = df[df['location'] == negara].copy()
 df_negara['date'] = pd.to_datetime(df_negara['date'])
 
+# Sidebar untuk pilih julat tarikh
 tarikh_min = df_negara['date'].min()
 tarikh_max = df_negara['date'].max()
 julattarikh = st.sidebar.date_input("Pilih julat tarikh", [tarikh_min, tarikh_max], min_value=tarikh_min, max_value=tarikh_max)
@@ -47,8 +49,11 @@ df_negara = df_negara[(df_negara['date'] >= pd.to_datetime(tarikh_mula)) & (df_n
 
 st.subheader(f"Statistik COVID-19 di {negara}")
 
-for col in ['total_cases', 'total_deaths', 'new_cases', 'people_vaccinated', 'people_fully_vaccinated', 'critical', 'active_cases', 'recovered']:
-    df_negara[col] = df_negara[col].fillna(0)
+df_negara['total_cases'] = df_negara['total_cases'].fillna(0)
+df_negara['total_deaths'] = df_negara['total_deaths'].fillna(0)
+df_negara['new_cases'] = df_negara['new_cases'].fillna(0)
+df_negara['people_vaccinated'] = df_negara['people_vaccinated'].fillna(0)
+df_negara['people_fully_vaccinated'] = df_negara['people_fully_vaccinated'].fillna(0)
 
 terkini = df_negara.iloc[-1]
 
@@ -56,6 +61,7 @@ st.write(f"**Setakat {terkini['date'].date()}**")
 st.write(f"Jumlah kes: {int(terkini['total_cases']):,}")
 st.write(f"Jumlah kematian: {int(terkini['total_deaths']):,}")
 
+# Kira kadar kematian dan kadar sembuh (%)
 if terkini['total_cases'] > 0:
     kadar_kematian = (terkini['total_deaths'] / terkini['total_cases']) * 100
     kadar_sembuh = ((terkini['total_cases'] - terkini['total_deaths']) / terkini['total_cases']) * 100
@@ -66,17 +72,16 @@ else:
 st.write(f"Kadar kematian: {kadar_kematian:.2f}%")
 st.write(f"Kadar sembuh (anggaran): {kadar_sembuh:.2f}%")
 
+# Statistik vaksinasi
 st.subheader("Statistik Vaksinasi")
+
 st.write(f"Jumlah orang telah divaksin (sekurang-kurangnya satu dos): {int(terkini['people_vaccinated']):,}")
 st.write(f"Jumlah orang lengkap divaksin: {int(terkini['people_fully_vaccinated']):,}")
 
-st.subheader("Statistik Pesakit Kritikal, Aktif dan Sembuh")
-st.write(f"Pesakit kritikal: {int(terkini['critical']):,}")
-st.write(f"Pesakit dalam rawatan (aktif): {int(terkini['active_cases']):,}")
-st.write(f"Pesakit sembuh: {int(terkini['recovered']):,}")
-
+# Kira purata 7 hari kes baru
 df_negara['purata_7hari_kes_baru'] = df_negara['new_cases'].rolling(window=7).mean().fillna(0)
 
+# Carta Kes Baru Harian & Purata 7 Hari
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.bar(df_negara['date'], df_negara['new_cases'], color='lightblue', label='Kes Baru Harian')
 ax.plot(df_negara['date'], df_negara['purata_7hari_kes_baru'], color='red', linewidth=2, label='Purata 7 Hari')
@@ -86,6 +91,7 @@ ax.set_title(f"Kes COVID-19 Harian di {negara}")
 ax.legend()
 st.pyplot(fig)
 
+# Carta jumlah kes kumulatif dan kematian kumulatif
 fig2, ax2 = plt.subplots(figsize=(10, 5))
 ax2.plot(df_negara['date'], df_negara['total_cases'], label='Jumlah Kes Kumulatif', color='blue')
 ax2.plot(df_negara['date'], df_negara['total_deaths'], label='Jumlah Kematian Kumulatif', color='black')
