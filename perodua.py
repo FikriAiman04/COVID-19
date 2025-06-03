@@ -1,40 +1,40 @@
 import streamlit as st
+import pandas as pd
+import requests
+import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Perodua Car Search", page_icon="🚗")
+st.set_page_config(page_title="COVID-19 Dashboard", page_icon="🦠")
 
-img_url = "https://upload.wikimedia.org/wikipedia/commons/8/8b/Perodua_Axia_1.0_SE_%282014%29_in_JB_Malaysia_%28cropped%29.jpg"
-st.image(img_url, caption="Perodua Axia", width=400)
+st.title("COVID-19 Global Dashboard")
 
+@st.cache_data(ttl=3600)
+def load_data():
+    url = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
+    df = pd.read_csv(url)
+    return df
 
-# Data model Perodua & gambar (dari laman rasmi)
-perodua_data = {
-    "Axia": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Perodua_Axia_1.0_SE_(2014)_in_JB_Malaysia_(cropped).jpg",
-    "Bezza": "https://upload.wikimedia.org/wikipedia/commons/4/42/Perodua_Bezza_1.3_Advance_(2016)_in_JB_Malaysia.jpg",
-    "Myvi": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Perodua_Myvi_1.5_AV_facelift_2021.jpg",
-    "Ativa": "https://upload.wikimedia.org/wikipedia/commons/e/e2/2021_Perodua_Ativa_1.0_AV.jpg",
-    "Alza": "https://upload.wikimedia.org/wikipedia/commons/8/8b/2022_Perodua_Alza_1.5_AV.jpg",
-    "Aruz": "https://upload.wikimedia.org/wikipedia/commons/9/91/2019_Perodua_Aruz_1.5_AV.jpg",
-}
+df = load_data()
 
+# Pilih negara
+countries = df['location'].unique()
+country = st.selectbox("Pilih negara", countries, index=list(countries).index("World"))
 
-# Tetapan Streamlit
+df_country = df[df['location'] == country]
 
-st.title("🚗 Carian Model Kereta Perodua Malaysia")
-st.markdown("[Laman rasmi Perodua Malaysia](https://www.perodua.com.my/our-models/choose-model.html)")
+st.write(f"### Statistik COVID-19 di {country}")
 
-# Kotak carian
-query = st.text_input("🔍 Cari model (contoh: Axia, SUV, Alza):")
+# Statistik terkini
+latest = df_country.iloc[-1]
+st.write(f"**Tanggal:** {latest['date']}")
+st.write(f"Total kasus: {int(latest['total_cases']):,}")
+st.write(f"Total kematian: {int(latest['total_deaths']):,}")
+st.write(f"Total sembuh (recovered) tidak tersedia di dataset ini.")
 
-# Papar hasil carian
-if query:
-    matches = {model: img for model, img in perodua_data.items() if query.lower() in model.lower()}
-
-    if matches:
-        st.success(f"{len(matches)} model dijumpai:")
-        for model, img_url in matches.items():
-            st.subheader(model)
-            st.image(img_url, width=400)
-    else:
-        st.warning("❌ Tiada model ditemui.")
-else:
-    st.info("Sila masukkan nama model untuk mula mencari.")
+# Visualisasi kasus harian
+fig, ax = plt.subplots()
+ax.plot(pd.to_datetime(df_country['date']), df_country['new_cases'], label='Kasus Baru')
+ax.set_xlabel("Tanggal")
+ax.set_ylabel("Kasus Baru")
+ax.set_title(f"Kasus COVID-19 Harian di {country}")
+ax.legend()
+st.pyplot(fig)
