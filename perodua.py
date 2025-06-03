@@ -29,4 +29,5 @@ st.write(f"Total kasus: {int(latest['total_cases'] or 0):,}")
 st.write(f"Total kematian: {int(latest['total_deaths'] or 0):,}")
 
 fig, ax = plt.subplots()
-ax.plot(df_country['date'], df_co
+ax.plot(df_country['date'], df_country['new_cases'].fillna(0), label="Kasus Baru")
+
