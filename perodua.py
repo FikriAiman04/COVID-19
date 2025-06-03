@@ -23,7 +23,7 @@ def set_background(jpg_file):
     )
 
 # Guna fungsi tu dengan nama fail gambar kamu
-set_background("covid_bg.jpg")
+set_background("covid.jpg")
 
 st.title("Papan Pemuka Global COVID-19")
 
