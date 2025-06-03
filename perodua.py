@@ -18,7 +18,7 @@ perodua_data = {
 
 
 # Tetapan Streamlit
-st.set_page_config(page_title="Perodua Car Search", page_icon="🚗")
+
 st.title("🚗 Carian Model Kereta Perodua Malaysia")
 st.markdown("[Laman rasmi Perodua Malaysia](https://www.perodua.com.my/our-models/choose-model.html)")
 
