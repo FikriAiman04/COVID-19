@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="Perodua Car Search", page_icon="🚗")
+
 img_url = "https://upload.wikimedia.org/wikipedia/commons/8/8b/Perodua_Axia_1.0_SE_%282014%29_in_JB_Malaysia_%28cropped%29.jpg"
 st.image(img_url, caption="Perodua Axia", width=400)
 
