@@ -2,22 +2,25 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+st.set_page_config(page_title="Papan Pemuka COVID-19", page_icon="🦠")
+
+# Tukar background jadi biru
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #007BFF;  /* Warna biru terang */
-        color: white;  /* Warna teks putih supaya kontras */
+        background-color: #007BFF;
+        color: white;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+st.title("Papan Pemuka Global COVID-19")
 
-st.set_page_config(page_title="Data Statistik COVID-19", page_icon="🦠")
+# ...kod lain
 
-st.title("Data Statistik Global COVID-19")
 
 @st.cache_data(ttl=3600)
 def load_data():
