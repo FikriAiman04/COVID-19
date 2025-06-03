@@ -2,6 +2,19 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #007BFF;  /* Warna biru terang */
+        color: white;  /* Warna teks putih supaya kontras */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 st.set_page_config(page_title="Data Statistik COVID-19", page_icon="🦠")
 
 st.title("Data Statistik Global COVID-19")
