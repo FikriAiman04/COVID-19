@@ -19,9 +19,6 @@ st.markdown(
 
 st.title("Papan Pemuka Global COVID-19")
 
-# ...kod lain
-
-
 @st.cache_data(ttl=3600)
 def load_data():
     url = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
@@ -55,12 +52,31 @@ st.subheader(f"Statistik COVID-19 di {negara}")
 df_negara['total_cases'] = df_negara['total_cases'].fillna(0)
 df_negara['total_deaths'] = df_negara['total_deaths'].fillna(0)
 df_negara['new_cases'] = df_negara['new_cases'].fillna(0)
+df_negara['people_vaccinated'] = df_negara['people_vaccinated'].fillna(0)
+df_negara['people_fully_vaccinated'] = df_negara['people_fully_vaccinated'].fillna(0)
 
 terkini = df_negara.iloc[-1]
 
 st.write(f"**Setakat {terkini['date'].date()}**")
 st.write(f"Jumlah kes: {int(terkini['total_cases']):,}")
 st.write(f"Jumlah kematian: {int(terkini['total_deaths']):,}")
+
+# Kira kadar kematian dan kadar sembuh (%)
+if terkini['total_cases'] > 0:
+    kadar_kematian = (terkini['total_deaths'] / terkini['total_cases']) * 100
+    kadar_sembuh = ((terkini['total_cases'] - terkini['total_deaths']) / terkini['total_cases']) * 100
+else:
+    kadar_kematian = 0
+    kadar_sembuh = 0
+
+st.write(f"Kadar kematian: {kadar_kematian:.2f}%")
+st.write(f"Kadar sembuh (anggaran): {kadar_sembuh:.2f}%")
+
+# Statistik vaksinasi
+st.subheader("Statistik Vaksinasi")
+
+st.write(f"Jumlah orang telah divaksin (sekurang-kurangnya satu dos): {int(terkini['people_vaccinated']):,}")
+st.write(f"Jumlah orang lengkap divaksin: {int(terkini['people_fully_vaccinated']):,}")
 
 # Kira purata 7 hari kes baru
 df_negara['purata_7hari_kes_baru'] = df_negara['new_cases'].rolling(window=7).mean().fillna(0)
