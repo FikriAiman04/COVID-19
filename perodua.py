@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Data Statistik COVID-19", page_icon="🦠")
 
-st.title("Papan Pemuka Global COVID-19")
+st.title("Data Statistik Global COVID-19")
 
 @st.cache_data(ttl=3600)
 def load_data():
