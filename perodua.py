@@ -2,20 +2,27 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Papan Pemuka COVID-19", page_icon="🦠")
 
-# Tukar background jadi biru
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: #007BFF;
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+def set_background(jpg_file):
+    with open(jpg_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded_string}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Guna fungsi tu dengan nama fail gambar kamu
+set_background("covid_bg.jpg")
 
 st.title("Papan Pemuka Global COVID-19")
 
