@@ -1,26 +1,37 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import base64 
+import streamlit as st
+import base64
 
-
-def set_background(jpg_file):
+def set_background_scaled(jpg_file, size="50%"):
     with open(jpg_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode()
+
     st.markdown(
         f"""
         <style>
         .stApp {{
             background-image: url("data:image/jpg;base64,{encoded_string}");
-            background-size: cover;
-            background-position: center;
+            background-size: {size};         /* Saiz gambar — ubah sini */
             background-repeat: no-repeat;
+            background-position: center;
             background-attachment: fixed;
+            color: white;
+        }}
+
+        /* Jadikan container & sidebar transparent */
+        .block-container {{
+            background-color: rgba(0, 0, 0, 0) !important;
+        }}
+        .css-18e3th9, .css-1d391kg {{
+            background-color: rgba(0, 0, 0, 0) !important;
+            backdrop-filter: none !important;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
+
     st.markdown(
     """
     <style>
