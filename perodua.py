@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Papan Pemuka COVID-19", page_icon="🦠")
+st.set_page_config(page_title="Data Statistik COVID-19", page_icon="🦠")
 
 st.title("Papan Pemuka Global COVID-19")
 
