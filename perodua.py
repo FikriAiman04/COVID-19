@@ -1,5 +1,5 @@
 import streamlit as st
-nano app.py
+
 
 # Data model Perodua & gambar (dari laman rasmi)
 perodua_data = {
