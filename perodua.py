@@ -15,7 +15,13 @@ def load_data():
 df = load_data()
 
 countries = df['location'].unique()
-country = st.selectbox("Pilih negara", countries, index=list(countries).tolist().index("World"))
+
+try:
+    default_idx = list(countries).index("World")
+except ValueError:
+    default_idx = 0
+
+country = st.selectbox("Pilih negara", countries, index=default_idx)
 
 df_country = df[df['location'] == country].copy()
 df_country['date'] = pd.to_datetime(df_country['date'])
