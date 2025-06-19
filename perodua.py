@@ -139,7 +139,7 @@ st.write(f"Kadar kematian: {kadar_kematian:.2f}%")
 st.write(f"Kadar sembuh (anggaran): {kadar_sembuh:.2f}%")
 
 # Statistik vaksinasi
-st.subheader("Vacinaction Statisticc")
+st.subheader("Vacinaction Statistic")
 
 st.write(f"Jumlah orang telah divaksin (sekurang-kurangnya satu dos): {int(terkini['people_vaccinated']):,}")
 st.write(f"Jumlah orang lengkap divaksin: {int(terkini['people_fully_vaccinated']):,}")
